@@ -7,7 +7,7 @@ let pe = new PrettyError();
 
 const stringifyObject = require('stringify-object');
 
-const pretty_all = {
+const awesome_pretty = {
   bytes: prettyBytes,
   ms: prettyMs,
   timestamp: timestamp,
@@ -17,4 +17,4 @@ const pretty_all = {
   json: stringifyObject
 };
 
-module.exports = pretty_all;
+module.exports = awesome_pretty;
