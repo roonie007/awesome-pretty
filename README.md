@@ -2,7 +2,7 @@
 Group up all available pretty modules in one
 
 ### IMPORTANT
-Big changes from last version
+Big changes from last version, All functions are now nested in String,Number,Object except the Error
 
 #### Install
 ```bash
