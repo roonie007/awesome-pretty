@@ -1,10 +1,25 @@
 ### awesome-pretty
 Group up all available pretty modules in one
 
+### IMPORTANT
+Big changes from last version
+
 #### Install
 ```bash
 npm install --save awesome-pretty
 ```
+
+### TODO
+- [x] Bytes
+- [x] Millisecondes
+- [x] Error
+- [x] JSON
+- [x] String
+- [ ] Number
+- [ ] Date
+- [ ] Url
+- [ ] Variable Name
+- [ ] Phone Number
 
 #### Use
 ```javascript
@@ -13,40 +28,43 @@ const awesome_pretty = require('awesome-pretty');
 
 #### Bytes
 ```javascript
-awesome_pretty.bytes(10)
-// => '20 kB'
+
+let size_in_bytes = 30000000; // Number
+size_in_bytes.bytes();
+// => '30 MB'
+
+let size_in_human = '30 MB'; // String
+size_in_human.bytes();
+// => 30000000
+
 ```
 
 #### Millisecondes
 ```javascript
-awesome_pretty.ms(1337000000)
-// => '15d 11h 23m 20s'
-```
+let milliseconds = 6546546116541 ;
+milliseconds.msToPretty();
+// => '207 years, 5 months, 1 week, 4 days, 6 hours, 31 minutes, 57 seconds'
 
-#### Timestamp
-```javascript
-/*
-  YYYY: full year (ex: 2017)
-  MM: month (ex: 04)
-  DD: day (ex: 01)
-  HH: hours (ex: 12)
-  mm: minutes (ex: 59)
-  ss: seconds (ex: 09)
-  ms: milliseconds (ex: 532)
-*/
+let milliseconds_fr = 6546546116541 ;
+milliseconds_fr.msToPretty('fr');
+// => '207 ans, 5 mois, 1 semaine, 4 jours, 6 heures, 31 minutes, 57 secondes'
 
-awesome_pretty.timestamp(1337000000)
-// => '2012-05-14'
+let milliseconds = 1517415909000 ;
+milliseconds.msToDate();
+// => '2018-01-31 05:25:09'
 
-awesome_pretty.timestamp(1337000000,'DD/MM/YYYY')
-// => '14/05/2012'
+let milliseconds_custom = 1517415909000 ;
+milliseconds_custom.msToDate('MM/DD/YYYY HH:ss');
+// => 'Wed 01/31/2018 17:09'
 
-awesome_pretty.timestamp(1337000000,'YYYY')
-// > '2012'
+let milliseconds_custom_fr = 1517415909000 ;
+milliseconds_custom_fr.msToDate('MM/DD/YYYY HH:ss','fr');
+// => 'mer. 01/31/2018 17:09'
 ```
 
 #### Error
 ```javascript
+const awesome_pretty = require('awesome-pretty');
 awesome_pretty.error(new Error('this is an error'));
 // console.log it and you will have a beautiful Error
 ```
@@ -57,100 +75,106 @@ const obj = {
   foo: 'bar',
   'arr': [1, 2, 3]
 };
-awesome_pretty.json(obj);
-// console.log it and you will have a beautiful Stringified JSON
-// More https://www.npmjs.com/package/stringify-object  
+obj.prettyJSON();
+/*
+{
+  "foo": "bar",
+  "arr": [1,2,3]
+}
+*/
+
+obj.prettyJSON(' ',5); // default ('\t',1)
+/*
+{
+     "foo": "bar",
+     "arr": [1,2,3]
+}
+*/
 ```
 
 #### String
 ```javascript
+'Hey hOw_are-yoU'.pretty(); // this function will use slug() then humanize() then capitalize()
+// => 'Hey how are you'
 
-awesome_pretty.string.camelize("Hey hOw_are-yoU");
+'Hey hOw_are-yoU'.camelize();
+// => 'heyHowAreYou'
+
+'Hey hOw_are-yoU'.camelize(false);
 // => 'heyHOwAreYoU'
 
-awesome_pretty.string.capitalize("hey how are you")
+'hey how are you'.capitalize();
 // => 'Hey how are you'
 
-awesome_pretty.string.capitalizeAll("hey how are you")
+'hey how are you'.capitalizeAll();
 // => 'Hey How Are You'
 
-awesome_pretty.string.humanize("heyHow_are-you");
+'heyHow_are-you'.humanize();
 // => 'Hey how are you'
 
-awesome_pretty.string.latinise("Héy hôw äre you");
+'Héy hôw äre you'.latinise();
 // => 'Hey how are you'
 
-awesome_pretty.string.trim("  Hey   how \t  are \r\n\r\n   you");
+'  Hey   how \t  are \r\n\r\n   you'.trim();
 // => 'Hey how are you'
 
-awesome_pretty.string.escape("<span>Hey how are you</span>");
+'<span>Hey how are you</span>'.escape();
 // => '&lt;span&gt;Hey how are you&lt;/span&gt;'
 
-awesome_pretty.string.unescape("&lt;span&gt;Hey how are you&lt;/span&gt;");
+'&lt;span&gt;Hey how are you&lt;/span&gt;'.unescape();
 // => '<span>Hey how are you</span>'
 
-awesome_pretty.string.lines("Hey how\r\nare\nyou");
+'Hey how\r\nare\nyou'.lines();
+// => ['Hey how','are','you']);
+
+'Hey how are you'.pad(20);
 // => '   Hey how are you  '
 
-awesome_pretty.string.pad("Hey how are you",20);
+'Hey'.padLeft();
 // => '  Hey'
 
-awesome_pretty.string.padLeft("Hey");
+'Hey'.padLeft(5,'-');
 // => '--Hey'
 
-awesome_pretty.string.padLeft("Hey",10);
+'Hey'.padLeft(10);
 // => '       Hey'
 
-awesome_pretty.string.padRight("Hey");
+'Hey'.padRight();
 // => 'Hey  '
 
-awesome_pretty.string.padRight("Hey",5,"-");
+'Hey'.padRight(5,'-');
 // => 'Hey--'
 
-awesome_pretty.string.padRight("Hey",10);
+'Hey'.padRight(10);
 // => 'Hey       '
 
-awesome_pretty.string.truncate("Hey how are you",9);
+'Hey how are you'.truncate(9);
 // => 'Hey how a...'
 
-awesome_pretty.string.truncate("Hey how are you",9,'---');
+'Hey how are you'.truncate(9,'---');
 // => 'Hey how a---'
 
-awesome_pretty.string.repeat('hey',3);
+'hey'.repeat(3);
 // => 'heyheyhey'
 
-awesome_pretty.string.replace("Hey how are you","Hey","Lol");
+'Hey how are you'.replace('Hey','Lol');
 // => 'Lol how are you'
 
-awesome_pretty.string.replaceAll("Hey how hey you Hey","Hey","Lol");
+'Hey how hey you Hey'.replaceAll('Hey','Lol');
 // => 'Lol how hey you Lol'
 
-awesome_pretty.string.slug("heyHow_are-you");
+'heyHow_are-you'.slug();
 // => 'heyhow-are-you'
 
-awesome_pretty.string.stripTags("<span>Hey how <strong>are</strong> you</span>");
+'<span>Hey how <strong>are</strong> you</span>'.stripTags();
 // => 'Hey how are you'
 
-awesome_pretty.string.stripTags("<span>Hey how <strong>are</strong> you</span>","strong");
+'<span>Hey how <strong>are</strong> you</span>'.stripTags('strong');
 // => '<span>Hey how are you</span>'
 
-awesome_pretty.string.wrapHTML("Hey how are you");
+'Hey how are you'.wrapHTML();
 // => '<span>Hey how are you</span>'
 
-awesome_pretty.string.wrapHTML("Hey how are you","div");
+'Hey how are you'.wrapHTML('div');
 // => '<div>Hey how are you</div>'
-
 ```
-
-### TODO
-- [x] Bytes
-- [x] Millisecondes
-- [x] Timestamp
-- [x] Error
-- [x] JSON
-- [x] String
-- [ ] Number
-- [ ] Date
-- [ ] Url
-- [ ] Variable Name
-- [ ] Phone Number
