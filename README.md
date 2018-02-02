@@ -15,7 +15,7 @@ npm install --save awesome-pretty
 - [x] Error
 - [x] JSON
 - [x] String
-- [ ] Number
+- [x] Currency
 - [ ] Date
 - [ ] Url
 - [ ] Variable Name
@@ -177,4 +177,43 @@ obj.prettyJSON(' ',5); // default ('\t',1)
 
 'Hey how are you'.wrapHTML('div');
 // => '<div>Hey how are you</div>'
+```
+
+```javascript
+(654132654).currency();
+// => '$654,132,654.00'
+
+(987632465).currency({code:'TND'});
+// => 'د.ت.‏ 987,632,465.000'
+
+(2132488945).currency({locale:'fr-FR'});
+// => '2 132 488 945,00 €'
+
+(548765324).currency({
+  symbol: '@', // Currency Sign
+  decimal: '*', // Decimal character
+  thousand: '^', // Thousand separator
+  precision: 1, // How many numbers after the deciaml character
+  format: '%v %s' // %s is the symbol and %v is the value
+});
+// => '548^765^324*0 @'
+
+'$654,132,654.00'.currency();
+// => 654132654
+
+//as you can see, I removed the Arabic sign "د.ت." to make it work
+'987,632,465.000'.currency({code:'TND'});
+// => 987632465
+
+'2 132 488 945,00 €'.currency({locale:'fr-FR'});
+// => 2132488945
+
+'548^765^324*0 @'.currency({
+  symbol: '@', // Currency Sign
+  decimal: '*', // Decimal character
+  thousand: '^', // Thousand separator
+  precision: 1, // How many numbers after the deciaml character
+  format: '%v %s' // %s is the symbol and %v is the value
+});
+// => 548765324
 ```

@@ -6,6 +6,7 @@ require('./lib/Numbers')
 require('./lib/Bytes')
 require('./lib/Millisecondes')
 require('./lib/JSON')
+require('./lib/Currency')
 
 const awesome_pretty = {
   error: (error) => {
