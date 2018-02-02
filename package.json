@@ -1,6 +1,6 @@
 {
   "name": "awesome-pretty",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Group up all available pretty modules in one",
   "main": "index.js",
   "scripts": {
