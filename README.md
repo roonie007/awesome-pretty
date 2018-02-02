@@ -179,6 +179,7 @@ obj.prettyJSON(' ',5); // default ('\t',1)
 // => '<div>Hey how are you</div>'
 ```
 
+#### Currency
 ```javascript
 (654132654).currency();
 // => '$654,132,654.00'
