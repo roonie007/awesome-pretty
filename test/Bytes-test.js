@@ -20,3 +20,5 @@ describe('Bytes', function() {
     assert.equal('60 PB'.bytes('si'),60000000000000000);
   });
 });
+
+console.log((30000000).bytes('iec'),10);

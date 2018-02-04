@@ -10,36 +10,43 @@ npm install --save awesome-pretty
 ```
 
 ### TODO
-- [x] Bytes
-- [x] Millisecondes
-- [x] Error
-- [x] JSON
-- [x] String
-- [x] Currency
+- [x] [[Bytes](#Bytes)
+- [x] [Millisecondes](#Millisecondes)
+- [x] [Error](#Error)
+- [x] [JSON](#JSON)
+- [x] [String](#String)
+- [x] [Number](#Number)
+- [x] [Currency](#Currency)
 - [ ] Date
 - [ ] Url
-- [ ] Variable Name
-- [ ] Phone Number
+- [x] [Variable Name](#variableNames)
+- [x] [Phone Number](#phoneNumbers)
 
 #### Use
 ```javascript
 const awesome_pretty = require('awesome-pretty');
 ```
 
-#### Bytes
+#### <a name="Bytes"></a>Bytes
 ```javascript
 
 let size_in_bytes = 30000000; // Number
 size_in_bytes.bytes();
 // => '30 MB'
+let size_in_bytes_iec = 30000000; // Number
+size_in_bytes_iec.bytes('iec');
+// => '28.61 MiB'
 
 let size_in_human = '30 MB'; // String
 size_in_human.bytes();
 // => 30000000
+let size_in_human_iec = '30 MB'; // String
+size_in_human_iec.bytes('iec');
+// => 31457280
 
 ```
 
-#### Millisecondes
+#### <a name="Millisecondes"></a>Millisecondes
 ```javascript
 let milliseconds = 6546546116541 ;
 milliseconds.msToPretty();
@@ -62,14 +69,14 @@ milliseconds_custom_fr.msToDate('MM/DD/YYYY HH:ss','fr');
 // => 'mer. 01/31/2018 17:09'
 ```
 
-#### Error
+#### <a name="Error"></a>Error
 ```javascript
 const awesome_pretty = require('awesome-pretty');
 awesome_pretty.error(new Error('this is an error'));
 // console.log it and you will have a beautiful Error
 ```
 
-#### JSON
+#### <a name="JSON"></a>JSON
 ```javascript
 const obj = {
   foo: 'bar',
@@ -92,7 +99,7 @@ obj.prettyJSON(' ',5); // default ('\t',1)
 */
 ```
 
-#### String
+#### <a name="String"></a>String
 ```javascript
 'Hey hOw_are-yoU'.pretty(); // this function will use slug() then humanize() then capitalize()
 // => 'Hey how are you'
@@ -179,7 +186,7 @@ obj.prettyJSON(' ',5); // default ('\t',1)
 // => '<div>Hey how are you</div>'
 ```
 
-#### Currency
+#### <a name="Currency"></a>Currency
 ```javascript
 (654132654).currency();
 // => '$654,132,654.00'
@@ -217,4 +224,157 @@ obj.prettyJSON(' ',5); // default ('\t',1)
   format: '%v %s' // %s is the symbol and %v is the value
 });
 // => 548765324
+```
+
+#### <a name="Number"></a>Number
+```javascript
+let nbr = 15 ;
+nbr.pretty();
+// => '15'
+
+nbr = 7585.547 ;
+nbr.pretty();
+// => '7,585.547'
+
+nbr = 2727272728 ;
+nbr.pretty({thousand:'^'});
+// => '2^727^272^728'
+
+nbr = 1727255.4425 ;
+nbr.pretty({precision:3});
+// => 1,727,255.442
+
+nbr = 1727255.4425 ;
+nbr.pretty({thousand:'^',precision:2,decimal:'*'});
+// => 1^727^255*44
+```
+
+#### <a name="phoneNumbers"></a>Phone Number
+```javascript
+let nbr = 632418652 ;
+nbr.phoneNumber('FR');
+// => '+33 6 32 41 86 52'
+
+let nbr = 632418652 ;
+nbr.phoneNumber('FR','National');
+// => '06 32 41 86 52'
+// International(is default) | National | E.164 | RFC3966
+
+```
+
+#### <a name="variableNames"></a>Variable Name
+```javascript
+
+'foo-bar'.camelCase(); //'fooBar'
+'foo_bar'.camelCase(); //'fooBar'
+'Foo-Bar'.camelCase(); //'fooBar'
+'--foo.bar'.camelCase(); //'fooBar'
+'__foo__bar__'.camelCase(); //'fooBar'
+'foo bar'.camelCase(); //'fooBar'
+
+'foo-bar'.snakeCase(); //'foo_bar'
+'foo_bar'.snakeCase(); //'foo_bar'
+'Foo-Bar'.snakeCase(); //'foo_bar'
+'--foo.bar'.snakeCase(); //'foo_bar'
+'__foo__bar__'.snakeCase(); //'foo_bar'
+'foo bar'.snakeCase(); //'foo_bar'
+
+'foo-bar'.pascalCase(); //'FooBar'
+'foo_bar'.pascalCase(); //'FooBar'
+'Foo-Bar'.pascalCase(); //'FooBar'
+'--foo.bar'.pascalCase(); //'FooBar'
+'__foo__bar__'.pascalCase(); //'FooBar'
+'foo bar'.pascalCase(); //'FooBar'
+
+'foo-bar'.constantCase(); //'FOO_BAR'
+'foo_bar'.constantCase(); //'FOO_BAR'
+'Foo-Bar'.constantCase(); //'FOO_BAR'
+'--foo.bar'.constantCase(); //'FOO_BAR'
+'__foo__bar__'.constantCase(); //'FOO_BAR'
+'foo bar'.constantCase(); //'FOO_BAR'
+
+'foo-bar'.paramCase(); //'foo-bar'
+'foo_bar'.paramCase(); //'foo-bar'
+'Foo-Bar'.paramCase(); //'foo-bar'
+'--foo.bar'.paramCase(); //'foo-bar'
+'__foo__bar__'.paramCase(); //'foo-bar'
+'foo bar'.paramCase(); //'foo-bar'
+
+'foo-bar'.dotCase(); //'foo.bar'
+'foo_bar'.dotCase(); //'foo.bar'
+'Foo-Bar'.dotCase(); //'foo.bar'
+'--foo.bar'.dotCase(); //'foo.bar'
+'__foo__bar__'.dotCase(); //'foo.bar'
+'foo bar'.dotCase(); //'foo.bar'
+
+'foo-bar'.pathCase(); //'foo/bar'
+'foo_bar'.pathCase(); //'foo/bar'
+'Foo-Bar'.pathCase(); //'foo/bar'
+'--foo.bar'.pathCase(); //'foo/bar'
+'__foo__bar__'.pathCase(); //'foo/bar'
+'foo bar'.pathCase(); //'foo/bar'
+
+'foo-bar'.headerCase(); //'Foo-Bar'
+'foo_bar'.headerCase(); //'Foo-Bar'
+'Foo-Bar'.headerCase(); //'Foo-Bar'
+'--foo.bar'.headerCase(); //'Foo-Bar'
+'__foo__bar__'.headerCase(); //'Foo-Bar'
+'foo bar'.headerCase(); //'Foo-Bar'
+
+'foo-bar'.noCase(); //'foo bar'
+'foo_bar'.noCase(); //'foo bar'
+'Foo-Bar'.noCase(); //'foo bar'
+'--foo.bar'.noCase(); //'foo bar'
+'__foo__bar__'.noCase(); //'foo bar'
+'foo bar'.noCase(); //'foo bar'
+
+'foo-bar'.sentenceCase(); //'Foo bar'
+'foo_bar'.sentenceCase(); //'Foo bar'
+'Foo-Bar'.sentenceCase(); //'Foo bar'
+'--foo.bar'.sentenceCase(); //'Foo bar'
+'__foo__bar__'.sentenceCase(); //'Foo bar'
+'foo bar'.sentenceCase(); //'Foo bar'
+
+'foo-bar'.swapCase(); //'FOO-BAR'
+'foo_bar'.swapCase(); //'FOO_BAR'
+'Foo-Bar'.swapCase(); //'fOO-bAR'
+'--foo.bar'.swapCase(); //'--FOO.BAR'
+'__foo__bar__'.swapCase(); //'__FOO__BAR__'
+'foo bar'.swapCase(); //'FOO BAR'
+
+'foo-bar'.titleCase(); //'Foo Bar'
+'foo_bar'.titleCase(); //'Foo Bar'
+'Foo-Bar'.titleCase(); //'Foo Bar'
+'--foo.bar'.titleCase(); //'Foo Bar'
+'__foo__bar__'.titleCase(); //'Foo Bar'
+'foo bar'.titleCase(); //'Foo Bar'
+
+'foo-bar'.lowerCase(); //'foo-bar'
+'foo_bar'.lowerCase(); //'foo_bar'
+'Foo-Bar'.lowerCase(); //'foo-bar'
+'--foo.bar'.lowerCase(); //'--foo.bar'
+'__foo__bar__'.lowerCase(); //'__foo__bar__'
+'foo bar'.lowerCase(); //'foo bar'
+
+'foo-bar'.lowerCaseFirst(); //'foo-bar'
+'foo_bar'.lowerCaseFirst(); //'foo_bar'
+'Foo-Bar'.lowerCaseFirst(); //'foo-Bar'
+'--foo.bar'.lowerCaseFirst(); //'--foo.bar'
+'__foo__bar__'.lowerCaseFirst(); //'__foo__bar__'
+'foo bar'.lowerCaseFirst(); //'foo bar'
+
+'foo-bar'.upperCase(); //'FOO-BAR'
+'foo_bar'.upperCase(); //'FOO_BAR'
+'Foo-Bar'.upperCase(); //'FOO-BAR'
+'--foo.bar'.upperCase(); //'--FOO.BAR'
+'__foo__bar__'.upperCase(); //'__FOO__BAR__'
+'foo bar'.upperCase(); //'FOO BAR'
+
+'foo-bar'.upperCaseFirst(); //'Foo-bar'
+'foo_bar'.upperCaseFirst(); //'Foo_bar'
+'Foo-Bar'.upperCaseFirst(); //'Foo-Bar'
+'--foo.bar'.upperCaseFirst(); //'--foo.bar'
+'__foo__bar__'.upperCaseFirst(); //'__foo__bar__'
+'foo bar'.upperCaseFirst(); //'Foo bar'
+
 ```
