@@ -1,6 +1,6 @@
 {
   "name": "awesome-pretty",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "Group up all available pretty modules in one",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,15 @@
     "pretty-bytes",
     "pretty-error",
     "pretty-ms",
-    "stringify-object"
+    "pretty-string",
+    "pretty-currency",
+    "pretty-phone-number",
+    "pretty-variable",
+    "stringify-object",
+    "string",
+    "currency",
+    "phone number",
+    "variable name"
   ],
   "author": "Mouadh Hsoumi",
   "license": "ISC",
